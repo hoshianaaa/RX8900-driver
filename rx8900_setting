@@ -13,7 +13,8 @@ sudo sh -c 'echo rx8900 0x32 > /sys/class/i2c-adapter/i2c-1/new_device'
 
 sudo apt-get purge fake-hwclock
 
-sed '$d' /etc/rc.local
-sed -e '$a "echo rx8900 0x32 > /sys/class/i2c-adapter/i2c-1/new_device"' etc/rc.local 
-sed -e '$a "/sbin/hwclock --hctosys"' /etc/rc.local 
-sed -e '$a "exit 0"' /etc/rc.local 
+echo "######## rc.local ##########"
+sudo sed -i '$d' /etc/rc.local
+sudo sed -i -e '$a echo rx8900 0x32 > /sys/class/i2c-adapter/i2c-1/new_device' /etc/rc.local 
+sudo sed -i -e '$a /sbin/hwclock --hctosys' /etc/rc.local 
+sudo sed -i -e '$a exit 0' /etc/rc.local 
