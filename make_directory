@@ -1,0 +1,7 @@
+STR=$(uname -a)
+echo ${STR}
+IFS=# ARR=(${STR})
+echo ${ARR[0]}
+FILE=${ARR[0]::-1}
+FILE=${FILE// /-}
+mkdir ${FILE}
