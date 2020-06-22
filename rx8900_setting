@@ -1,8 +1,19 @@
 STR=$(uname -a)
-echo ${STR}
 IFS=# ARR=(${STR})
-echo ${ARR[0]}
 FILE=${ARR[0]::-1}
 FILE=${FILE// /-}
-echo "------copy rtc-rx8900.ko---------"
+echo "######## file name #########"
+echo ${FILE}
+echo "######## copy rtc-rx8900.ko ###########"
 sudo cp ${FILE}/rtc-rx8900.ko /lib/modules/`uname -r`/
+
+sudo depmod
+sudo modprobe rtc-rx8900
+sudo sh -c 'echo rx8900 0x32 > /sys/class/i2c-adapter/i2c-1/new_device'
+
+sudo apt-get purge fake-hwclock
+
+sed '$d' /etc/rc.local
+sed -e '$a "echo rx8900 0x32 > /sys/class/i2c-adapter/i2c-1/new_device"' etc/rc.local 
+sed -e '$a "/sbin/hwclock --hctosys"' /etc/rc.local 
+sed -e '$a "exit 0"' /etc/rc.local 
