@@ -7,8 +7,9 @@ echo ${FILE}
 echo "######## copy rtc-rx8900.ko ###########"
 sudo cp ${FILE}/rtc-rx8900.ko /lib/modules/`uname -r`/
 
+echo "######## install rtc-rx8900 driver  ###########"
 sudo depmod
-sudo modprobe rtc-rx8900
+sudo modprobe rtc-rx8900 --force-vermagic
 sudo sh -c 'echo rx8900 0x32 > /sys/class/i2c-adapter/i2c-1/new_device'
 
 sudo apt-get purge fake-hwclock
